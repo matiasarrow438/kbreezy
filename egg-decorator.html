@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHster EGG - Egg Decorator</title>
+    <link rel="icon" type="image/png" href="assets/images/ester.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="minigame.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .intro-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            color: white;
+            text-align: center;
+            border: 2px solid #9370db;
+            box-shadow: 0 0 30px rgba(147, 112, 219, 0.3);
+        }
+        
+        .intro-content h2 {
+            color: #9370db;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .intro-content p {
+            margin: 15px 0;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .intro-content ul {
+            text-align: left;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .intro-content li {
+            margin: 10px 0;
+        }
+        
+        .enter-button {
+            background: #9370db;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .enter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(147, 112, 219, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Instructions Overlay -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-content">
+            <h2>🥚 Welcome to the ETHster Egg Design Contest! 🎨</h2>
+            <p>Get ready to showcase your creativity and win amazing prizes!</p>
+            
+            <ul>
+                <li>🎨 Design your unique Easter egg using our decorator tools</li>
+                <li>💎 Add patterns, effects, stickers, and custom text</li>
+                <li>📸 Save your design when finished</li>
+                <li>🐦 Share your creation on Twitter to enter the contest</li>
+                <li>🏆 Winners will be selected based on creativity and community engagement</li>
+            </ul>
+            
+            <p>Prize Pool: <span style="color: #9370db;">$ESTER Tokens</span></p>
+            <p style="font-size: 14px; opacity: 0.8;">Contest ends April 1st, 2024. Winners will be announced on our Twitter.</p>
+            
+            <button class="enter-button" id="enterButton">Start Designing!</button>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="game-header">
+            <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1>Egg Decorator</h1>
+            <div class="header-buttons">
+                <button id="undoButton" class="control-btn" title="Undo"><i class="fas fa-undo"></i></button>
+                <button id="clearButton" class="control-btn" title="Clear All"><i class="fas fa-trash"></i></button>
+                <button id="saveButton" class="cta-button primary">Save Design</button>
+            </div>
+        </div>
+        
+        <div class="decorator-container">
+            <div class="tools-panel">
+                <div class="tool-section">
+                    <h3>Base Color</h3>
+                    <div class="color-picker">
+                        <button class="color-btn" data-color="#9370db" style="background: #9370db;" title="Purple"></button>
+                        <button class="color-btn" data-color="#87ceeb" style="background: #87ceeb;" title="Blue"></button>
+                        <button class="color-btn" data-color="#90ee90" style="background: #90ee90;" title="Green"></button>
+                        <button class="color-btn" data-color="#ffd700" style="background: #ffd700;" title="Gold"></button>
+                        <button class="color-btn" data-color="#ff69b4" style="background: #ff69b4;" title="Pink"></button>
+                        <button class="color-btn" data-color="#ff7f50" style="background: #ff7f50;" title="Coral"></button>
+                        <button class="color-btn" data-color="#da70d6" style="background: #da70d6;" title="Orchid"></button>
+                        <button class="color-btn" data-color="#40e0d0" style="background: #40e0d0;" title="Turquoise"></button>
+                    </div>
+                </div>
+                
+                <div class="tool-section">
+                    <h3>Patterns</h3>
+                    <div class="pattern-grid">
+                        <button class="pattern-btn" data-pattern="dots">Polka Dots</button>
+                        <button class="pattern-btn" data-pattern="stripes">Stripes</button>
+                        <button class="pattern-btn" data-pattern="zigzag">Zigzag</button>
+                        <button class="pattern-btn" data-pattern="hearts">Hearts</button>
+                        <button class="pattern-btn" data-pattern="stars">Stars</button>
+                        <button class="pattern-btn" data-pattern="swirls">Swirls</button>
+                        <button class="pattern-btn" data-pattern="diamonds">Diamonds</button>
+                        <button class="pattern-btn" data-pattern="confetti">Confetti</button>
+                    </div>
+                </div>
+                
+                <div class="tool-section">
+                    <h3>Effects</h3>
+                    <div class="effect-grid">
+                        <button class="effect-btn" data-effect="glitter">Glitter</button>
+                        <button class="effect-btn" data-effect="rainbow">Rainbow</button>
+                        <button class="effect-btn" data-effect="sparkle">Sparkle</button>
+                        <button class="effect-btn" data-effect="metallic">Metallic</button>
+                    </div>
+                </div>
+                
+                <div class="tool-section">
+                    <h3>Stickers</h3>
+                    <div class="sticker-grid">
+                        <button class="sticker-btn" data-sticker="diamond">💎</button>
+                        <button class="sticker-btn" data-sticker="rocket">🚀</button>
+                        <button class="sticker-btn" data-sticker="moon">🌙</button>
+                        <button class="sticker-btn" data-sticker="star">⭐</button>
+                        <button class="sticker-btn" data-sticker="money">💰</button>
+                        <button class="sticker-btn" data-sticker="fire">🔥</button>
+                        <button class="sticker-btn" data-sticker="heart">❤️</button>
+                        <button class="sticker-btn" data-sticker="sparkles">✨</button>
+                        <button class="sticker-btn" data-sticker="crown">👑</button>
+                        <button class="sticker-btn" data-sticker="gift">🎁</button>
+                        <button class="sticker-btn" data-sticker="rainbow">🌈</button>
+                        <button class="sticker-btn" data-sticker="crystal">💫</button>
+                        <button class="sticker-btn" data-sticker="flower">🌸</button>
+                        <button class="sticker-btn" data-sticker="clover">🍀</button>
+                        <button class="sticker-btn" data-sticker="butterfly">🦋</button>
+                        <button class="sticker-btn" data-sticker="magic">✨</button>
+                    </div>
+                </div>
+
+                <div class="tool-section">
+                    <h3>Text</h3>
+                    <div class="text-tools">
+                        <button id="addTextBtn" class="text-btn">Add Text</button>
+                        <p class="tool-tip">Click and drag text to move it</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="canvas-container">
+                <canvas id="decoratorCanvas"></canvas>
+                <div class="trash-zone">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Drag here to delete</span>
+                </div>
+                <div class="canvas-help">
+                    <p>Click and drag stickers to move them around!</p>
+                    <p>Click patterns or effects again to remove them</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="submission-panel">
+            <input type="text" id="designName" placeholder="Name your masterpiece..." maxlength="30">
+            <button id="submitButton" class="cta-button primary">Submit to Contest</button>
+        </div>
+    </div>
+    
+    <!-- Text Customization Modal -->
+    <div id="textModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Text</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="textInput">Your Text</label>
+                    <input type="text" id="textInput" placeholder="Enter your text here..." maxlength="50">
+                </div>
+                
+                <div class="input-group">
+                    <label for="fontSizeRange">Font Size</label>
+                    <div class="size-control">
+                        <input type="range" id="fontSizeRange" min="12" max="48" value="24" step="2">
+                        <span id="fontSizeDisplay">24px</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Text Color</label>
+                    <div class="color-grid">
+                        <button class="text-color-btn active" data-color="#000000" style="background: #000000"></button>
+                        <button class="text-color-btn" data-color="#ffffff" style="background: #ffffff; border: 1px solid #ddd"></button>
+                        <button class="text-color-btn" data-color="#9370db" style="background: #9370db"></button>
+                        <button class="text-color-btn" data-color="#ff69b4" style="background: #ff69b4"></button>
+                        <button class="text-color-btn" data-color="#4169e1" style="background: #4169e1"></button>
+                        <button class="text-color-btn" data-color="#32cd32" style="background: #32cd32"></button>
+                        <button class="text-color-btn" data-color="#ffd700" style="background: #ffd700"></button>
+                        <button class="text-color-btn" data-color="#ff4500" style="background: #ff4500"></button>
+                    </div>
+                </div>
+                
+                <div class="preview">
+                    <label>Preview</label>
+                    <div id="textPreview">Sample Text</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelTextBtn" class="modal-btn">Cancel</button>
+                <button id="addTextToCanvas" class="modal-btn primary">Add Text</button>
+            </div>
+        </div>
+    </div>
+    <script src="minigame.js"></script>
+</body>
+</html> 
